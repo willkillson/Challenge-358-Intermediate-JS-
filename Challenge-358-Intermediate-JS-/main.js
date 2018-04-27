@@ -21,19 +21,55 @@ function processFunction(matlabgames, matlabteams) {
         games[i] = games[i].toString();
         let p = games[i];
         p = p.match(/\d{1,4}/g);
-        let f = p[0] + " " + p[2] + " " + p[3] + " " + p[5];
+
+
+        //convert strings to ints
+        for (let i = 0; i < p.length; i++) {
+            p[i] = parseInt(p[i], 10);
+        }
+ 
+        p[0] = p[0] - 1;//fix indexs for teams because they start off at 1 instead of zero
+        p[3] = p[3] - 1;//fix indexs for teams because they start off at 1 instead of zero
+
+        for (let i = 0; i < p.length; i++) {
+            p[i] = p[i].toString();
+        }
+
+        //convert ints back into strings
+
+        let f = teams[p[0]] + " " + p[2] + " " + teams[p[3]] + " " + p[5];
         games[i] = f;
     }
 
-
-    console.log(games);
-
-
+    //find people who have beaten the champion Villanova index# 988
+    let input = FindWhoBeat(teams[988]);
 
 
-    let input = 1337;
     return input;
+
+
+
+
+
+    /////////functions
+
+    function FindWhoBeat(x) {
+        //input string -- name of a team
+        //return Array of strings -- people who beat the input string
+
+        let loser = x;
+        let winners = new Array();
+
+        console.log(loser);
+        
+
+
+        return winners;
+    }
+
+
 }
+
 
 
 
