@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <title>Challenge 358 Hard</title>
+</head>
+<body>
+    <div id="page">
+        <h1>[2018-04-25] Challenge #358 [Intermediate] Everyone's A Winner!</h1>
+        <pre>Description
+Today's challenge comes from the website fivethirtyeight.com, which runs a weekly Riddler column. Today's dailyprogrammer challenge was the riddler on 2018-04-06.
+
+From Matt Gold, a chance, perhaps, to redeem your busted bracket:
+
+On Monday, Villanova won the NCAA men’s basketball national title. But I recently overheard some boisterous Butler fans calling themselves the “transitive national champions,” because Butler beat Villanova earlier in the season. Of course, other teams also beat Butler during the season and their fans could therefore make exactly the same claim.
+
+How many transitive national champions were there this season? Or, maybe more descriptively, how many teams weren’t transitive national champions?
+
+(All of this season’s college basketball results are here. To get you started, Villanova lost to Butler, St. John’s, Providence and Creighton this season, all of whom can claim a transitive title. But remember, teams beat those teams, too.)
+
+Output Description
+Your program should output the number of teams that can claim a "transitive" national championship. This is any team that beat the national champion, any team that beat one of those teams, any team that beat one of those teams, etc...
+
+Challenge Input
+The input is a list of all the NCAA men's basketball games from this past season via https://www.masseyratings.com/scores.php?s=298892&sub=12801&all=1
+
+Challenge Output
+1185</pre>
+        <h2>Input files</h2>
+        <h3>Select both text files matlabgames.txt and matlabteams.txt:</h3>
+        <h4>        matlabgames<input type="file" id="matlabgames"></h4>
+        <h4>     matlabteams<input type="file" id="matlabteams"></h4>
+        <h3><button id="DisplayProcessed">Display Processed Input</button></h3>
+        <pre id="processedInput"></pre>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
