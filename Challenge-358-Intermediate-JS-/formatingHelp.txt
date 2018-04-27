@@ -11,6 +11,9 @@ Team 2 (prefixed by '@' if played at home)
 Team 2's score
 Flags: P=playoff, F=forfeit, S=stricken, E=exhibition, O?=overtime
 Note: may include game title or venue information
+
+
+
 Matlab Games - CSV file with the following fields:
 days since 1-1-0000
 YYYYMMDD
@@ -20,6 +23,11 @@ score1
 team2 index (zero if a non-conference team)
 homefield2 (1=home, -1=away, 0=neutral)
 score2
+
+
+
+
+
 Matlab Hyper-Games - CSV file with the following fields:
 days since 1-1-0000
 YYYYMMDD
