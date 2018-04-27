@@ -10,16 +10,23 @@ var rawBtn = document.getElementById('DisplayRaw');
 var processedBtn = document.getElementById('DisplayProcessed');
 
 function processFunction(matlabgames, matlabteams) {
-
-    let games = matlabgames.match(/\d{6}[,]\d{8}[,]\s\d{1,4}[,]\s\d[,]\s\d{1,3}[,]\s\d{1,4}[,]\s\d[,]\s\d{1,3}/g);
     let teams = matlabteams.match(/\d{1,4},\s[A-Z]{1}\S+/g);//split the teams up line by line
     for (let i = 0; i < teams.length; i++) {//remove the numbers and bullshit from the team name
         teams[i] = teams[i].replace(/\d{1,4}[,]\s/g, "");
     }
+
+    let games = matlabgames.match(/\d{6}[,]\d{8}[,]\s\d{1,4}[,]\s\d[,]\s\d{1,3}[,]\s\d{1,4}[,]\s\d[,]\s\d{1,3}/g);
     for (let i = 0; i < games.length; i++) {
-        console.log(games[i]);
+        games[i] = games[i].match(/\d{1,4}[,]\s\d[,]\s\d{1,3}[,]\s\d{1,4}[,]\s\d[,]\s\d{1,3}/g);
+        games[i] = games[i].toString();
+        let p = games[i];
+        p = p.match(/\d{1,4}/g);
+        let f = p[0] + " " + p[2] + " " + p[3] + " " + p[5];
+        games[i] = f;
     }
 
+
+    console.log(games);
 
 
 
