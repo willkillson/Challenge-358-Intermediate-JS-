@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Challenge-358-Intermediate-JS-", "Challenge-358-Intermediate-JS-", "{85619702-F2D8-4DD5-9CC5-74110E2B3BC6}"
 	ProjectSection(SolutionItems) = preProject
-		HTMLPage1.html = HTMLPage1.html
+		index.html = index.html
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{32F086D5-B59F-46C8-8CD6-39D96CC527D7}"
