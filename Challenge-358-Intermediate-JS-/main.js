@@ -14,7 +14,7 @@ var processedBtn = document.getElementById('DisplayProcessed');
 function Entry(NewName) {
 
     this.name = NewName;
-    this.HasBeenChecked = false;
+    this.isChecked = false;
 
 }
 
@@ -55,109 +55,59 @@ function processFunction(matlabgames, matlabteams) {
     }
 
     //find people who have beaten the champion Villanova index# 988
+    let Entries = new Array();
+    let newEntry = new Entry("Villanova");
+    Entries.push(newEntry);
+    Entries = newFunction(Entries);
 
-    let transitoryWinners = FindWhoBeat(teams[988], null);
 
 
 
-    let DoWeContinue = true;
-    while (DoWeContinue) {
+    return Entries;
 
-        for (let i = 0; i < transitoryWinners.length; i++) {
-            if (transitoryWinners[i][transitoryWinners[i].length - 1] !== "*") {
-                console.log("WORKSE!~");
-                DoWeContinue = false;
-            }
-            else {
-                DoWeContinue = true;
-            }
-        }
+    //let DoWeContinue = true;
+    //while (DoWeContinue) {
 
-        for (let i = 0; i < transitoryWinners.length; i++) {
-            if (transitoryWinners[i][transitoryWinners[i].length - 1] === "*") {
+    //    for (let i = 0; i < transitoryWinners.length; i++) {
+    //        if (transitoryWinners[i][transitoryWinners[i].length - 1] !== "*") {
+    //            console.log("WORKSE!~");
+    //            DoWeContinue = false;
+    //        }
+    //        else {
+    //            DoWeContinue = true;
+    //        }
+    //    }
+
+    //    for (let i = 0; i < transitoryWinners.length; i++) {
+    //        if (transitoryWinners[i][transitoryWinners[i].length - 1] === "*") {
          
-                transitoryWinners.push
-                DoWeContinue = false;
-            }
-        }
-    }
+    //            transitoryWinners.push
+    //            DoWeContinue = false;
+    //        }
+    //    }
+    //}
 
 
 
 
-    return transitoryWinners;
 
     /////////functions
-    function FindWhoBeat(x, list) {
-        //input string -- name of a team
-        //return Array of strings -- people who beat the input string
+    function newFunction(Entries) {
 
+        //find a loser
+        
+        //find the games that involve the loser
+        //find the people who beat the loser && make sure peopleWhoBeatTheLoser isn't already in the Entries 
         
 
-        let loser = x;
-        let winners = new Array();
 
-        let gamesThatInvolveTheLoser = [];
-        for (let i = 0; i < games.length; i++) {//find the games that involve the loser
-            if ((games[i][0] === loser.name)||(games[i][2] === loser.name)) {
-                gamesThatInvolveTheLoser.push(i);
-            }
-        }
 
-        let peopleWhoBeatTheLoser = [];
-        for (let i = 0; i < gamesThatInvolveTheLoser.length; i++) {//find the people who beat the loser
-            if (games[gamesThatInvolveTheLoser[i]][0] === loser.name) {
-                if (parseInt(games[gamesThatInvolveTheLoser[i]][1],10) < parseInt(games[gamesThatInvolveTheLoser[i]][3], 10)) {
-                    peopleWhoBeatTheLoser.push(games[gamesThatInvolveTheLoser[i]][2]);
-                }
-            }
-            if (games[gamesThatInvolveTheLoser[i]][2] === loser.name) {
-                if (parseInt(games[gamesThatInvolveTheLoser[i]][3],10) < parseInt(games[gamesThatInvolveTheLoser[i]][1]), 10) {
-                    peopleWhoBeatTheLoser.push(games[gamesThatInvolveTheLoser[i]][0]);
-                }
-            }
-        }
+        Entries[0].isChecked = true;
 
-  
-        //console.log(gamesThatInvolveTheLoser)
+        console.log(Entries);
 
-  
-
-        if (list !== null) {//make sure peopleWhoBeatTheLoser isn't already in list 
-
-            let finalList = new Array();
-            for (let i = 0; i < peopleWhoBeatTheLoser.length; i++) {
-                if (list.includes(peopleWhoBeatTheLoser[i])) {
-                    //do nothing
-                }
-                else {
-                    finalList.push(peopleWhoBeatTheLoser[i]);
-                }
-            }
-
-            for (let i = 0; i < finalList.length; i++) {
-                finalList[i] = finalList[i] + "*";
-            }
-
-            return finalList;
-        }
-
-        for (let i = 0; i < peopleWhoBeatTheLoser.length; i++) {
-            peopleWhoBeatTheLoser[i] = peopleWhoBeatTheLoser[i] + "*";
-        }
-        return peopleWhoBeatTheLoser;
     }
-    function GetIndexFromName(x) {
-        //input string -- name of team
-        //return number -- index of the name of the team from the teams Array
-        for (let i = 0; i < teams.length; i++) {
-            if (teams[i] === x) {
-                return i;
-            }
-        }
 
-        alert("!Warning! teams Array did not have: " + x);
-    }
 }
 
 
@@ -218,3 +168,77 @@ processedBtn.onclick = function () {
         display_p.innerText = out;
     }
 };
+
+
+
+
+//function FindWhoBeat(x, Entries) {
+//    //input string -- name of a team
+//    //return Array of strings -- people who beat the input string
+
+
+
+//    let loser = x;
+//    let winners = new Array();
+
+//    let gamesThatInvolveTheLoser = [];
+//    for (let i = 0; i < games.length; i++) {//find the games that involve the loser
+//        if ((games[i][0] === loser.name) || (games[i][2] === loser.name)) {
+//            gamesThatInvolveTheLoser.push(i);
+//        }
+//    }
+
+//    let peopleWhoBeatTheLoser = [];
+//    for (let i = 0; i < gamesThatInvolveTheLoser.length; i++) {//find the people who beat the loser
+//        if (games[gamesThatInvolveTheLoser[i]][0] === loser.name) {
+//            if (parseInt(games[gamesThatInvolveTheLoser[i]][1], 10) < parseInt(games[gamesThatInvolveTheLoser[i]][3], 10)) {
+//                peopleWhoBeatTheLoser.push(games[gamesThatInvolveTheLoser[i]][2]);
+//            }
+//        }
+//        if (games[gamesThatInvolveTheLoser[i]][2] === loser.name) {
+//            if (parseInt(games[gamesThatInvolveTheLoser[i]][3], 10) < parseInt(games[gamesThatInvolveTheLoser[i]][1]), 10) {
+//                peopleWhoBeatTheLoser.push(games[gamesThatInvolveTheLoser[i]][0]);
+//            }
+//        }
+//    }
+
+
+//    //console.log(gamesThatInvolveTheLoser)
+
+
+
+//    if (list !== null) {//make sure peopleWhoBeatTheLoser isn't already in list 
+
+//        let finalList = new Array();
+//        for (let i = 0; i < peopleWhoBeatTheLoser.length; i++) {
+//            if (list.includes(peopleWhoBeatTheLoser[i])) {
+//                //do nothing
+//            }
+//            else {
+//                finalList.push(peopleWhoBeatTheLoser[i]);
+//            }
+//        }
+
+//        for (let i = 0; i < finalList.length; i++) {
+//            finalList[i] = finalList[i] + "*";
+//        }
+
+//        return finalList;
+//    }
+
+//    for (let i = 0; i < peopleWhoBeatTheLoser.length; i++) {
+//        peopleWhoBeatTheLoser[i] = peopleWhoBeatTheLoser[i] + "*";
+//    }
+//    return peopleWhoBeatTheLoser;
+//}
+//function GetIndexFromName(x) {
+//    //input string -- name of team
+//    //return number -- index of the name of the team from the teams Array
+//    for (let i = 0; i < teams.length; i++) {
+//        if (teams[i] === x) {
+//            return i;
+//        }
+//    }
+
+//    alert("!Warning! teams Array did not have: " + x);
+//}
