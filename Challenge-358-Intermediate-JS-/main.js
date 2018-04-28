@@ -15,10 +15,10 @@ function processFunction(matlabgames, matlabteams) {
         teams[i] = teams[i].replace(/\d{1,4}[,]\s/g, "");
     }
 
-    let games = matlabgames.match(/\d{6}[,]\d{8}[,]\s\d{1,4}[,]\s\d[,]\s\d{1,3}[,]\s\d{1,4}[,]\s\d[,]\s\d{1,3}/g);
+    let games = matlabgames.match(/\d{1,4},\s{1,3}[-]?\d,\s{1,5}\d{1,3},\s{1,5}\d{1,4},\s{1,5}[-]?\d,\s{1,5}\d{1,3}/g);
+    console.log(games.length);
     for (let i = 0; i < games.length; i++) {
-        games[i] = games[i].match(/\d{1,4}[,]\s\d[,]\s\d{1,3}[,]\s\d{1,4}[,]\s\d[,]\s\d{1,3}/g);
-        games[i] = games[i].toString();
+
         let p = games[i];
         p = p.match(/\d{1,4}/g);
 
@@ -27,7 +27,7 @@ function processFunction(matlabgames, matlabteams) {
         for (let i = 0; i < p.length; i++) {
             p[i] = parseInt(p[i], 10);
         }
- 
+
         p[0] = p[0] - 1;//fix indexs for teams because they start off at 1 instead of zero
         p[3] = p[3] - 1;//fix indexs for teams because they start off at 1 instead of zero
 
@@ -36,40 +36,131 @@ function processFunction(matlabgames, matlabteams) {
         }
 
         //convert ints back into strings
-
-        let f = teams[p[0]] + " " + p[2] + " " + teams[p[3]] + " " + p[5];
+        let f = new Array();
+        //let f = " T1 "+teams[p[0]] + " S1 " + p[2] + " T2 " + teams[p[3]] + " S2 " + p[5];
+        f.push(teams[p[0]]);
+        f.push(p[2]);
+        f.push(teams[p[3]]);
+        f.push(p[5]);
         games[i] = f;
     }
 
     //find people who have beaten the champion Villanova index# 988
-    let input = FindWhoBeat(teams[988]);
+    let transitoryWinners = FindWhoBeat(teams[988], null);
 
 
-    return input;
+
+    let DoWeContinue = true;
+    while (DoWeContinue) {
+
+
+
+
+        for (let i = 0; i < transitoryWinners.length; i++) {
+            if (transitoryWinners[i][transitoryWinners[i].length - 1] !== "*") {
+                console.log("WORKSE!~");
+                DoWeContinue = false;
+            }
+            else {
+                DoWeContinue = true;
+            }
+        }
+
+
+        for (let i = 0; i < transitoryWinners.length; i++) {
+            if (transitoryWinners[i][transitoryWinners[i].length - 1] === "*") {
+                //we have found one to look into!
+
+                transitoryWinners.push
+                DoWeContinue = false;
+            }
+
+        }
+    }
+
+
+
+
+    return transitoryWinners;
 
 
 
 
 
     /////////functions
-
-    function FindWhoBeat(x) {
+    function FindWhoBeat(x, list) {
         //input string -- name of a team
         //return Array of strings -- people who beat the input string
+
+        
 
         let loser = x;
         let winners = new Array();
 
-        console.log(loser);
-        
+        let gamesThatInvolveTheLoser = [];
+        for (let i = 0; i < games.length; i++) {//find the games that involve the loser
+            if ((games[i][0] === loser)||(games[i][2] === loser)) {
+                gamesThatInvolveTheLoser.push(i);
+            }
+        }
 
+        let peopleWhoBeatTheLoser = [];
+        for (let i = 0; i < gamesThatInvolveTheLoser.length; i++) {//find the people who beat the loser
+            if (games[gamesThatInvolveTheLoser[i]][0] === loser) {
+                if (parseInt(games[gamesThatInvolveTheLoser[i]][1],10) < parseInt(games[gamesThatInvolveTheLoser[i]][3], 10)) {
+                    peopleWhoBeatTheLoser.push(games[gamesThatInvolveTheLoser[i]][2]);
+                }
+            }
+            if (games[gamesThatInvolveTheLoser[i]][2] === loser) {
+                if (parseInt(games[gamesThatInvolveTheLoser[i]][3],10) < parseInt(games[gamesThatInvolveTheLoser[i]][1]), 10) {
+                    peopleWhoBeatTheLoser.push(games[gamesThatInvolveTheLoser[i]][0]);
+                }
+            }
+        }
 
-        return winners;
+  
+        //console.log(gamesThatInvolveTheLoser)
+
+  
+
+        if (list !== null) {//make sure peopleWhoBeatTheLoser isn't already in list 
+
+            let finalList = new Array();
+            for (let i = 0; i < peopleWhoBeatTheLoser.length; i++) {
+                if (list.includes(peopleWhoBeatTheLoser[i])) {
+                    //do nothing
+                }
+                else {
+                    finalList.push(peopleWhoBeatTheLoser[i]);
+                }
+            }
+
+            for (let i = 0; i < finalList.length; i++) {
+                finalList[i] = finalList[i] + "*";
+            }
+
+            return finalList;
+        }
+
+        for (let i = 0; i < peopleWhoBeatTheLoser.length; i++) {
+            peopleWhoBeatTheLoser[i] = peopleWhoBeatTheLoser[i] + "*";
+        }
+        return peopleWhoBeatTheLoser;
+    }
+    function GetIndexFromName(x) {
+        //input string -- name of team
+        //return number -- index of the name of the team from the teams Array
+        for (let i = 0; i < teams.length; i++) {
+            if (teams[i] === x) {
+                return i;
+            }
+        }
+
+        alert("!Warning! teams Array did not have: " + x);
     }
 
 
 }
-
 
 
 

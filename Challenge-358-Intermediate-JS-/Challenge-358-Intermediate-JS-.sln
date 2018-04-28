@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{32F0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "input", "input", "{7E71C555-7732-4628-9743-54E94414C4F3}"
 	ProjectSection(SolutionItems) = preProject
+		cheating.txt = cheating.txt
 		formatingHelp.txt = formatingHelp.txt
 		matlabgames.txt = matlabgames.txt
 		matlabteams.txt = matlabteams.txt
