@@ -9,6 +9,15 @@ var fileInputTwo = document.getElementById('matlabteams');
 var rawBtn = document.getElementById('DisplayRaw');
 var processedBtn = document.getElementById('DisplayProcessed');
 
+
+
+function Entry(NewName) {
+
+    this.name = NewName;
+    this.HasBeenChecked = false;
+
+}
+
 function processFunction(matlabgames, matlabteams) {
     let teams = matlabteams.match(/\d{1,4},\s[A-Z]{1}\S+/g);//split the teams up line by line
     for (let i = 0; i < teams.length; i++) {//remove the numbers and bullshit from the team name
@@ -46,15 +55,13 @@ function processFunction(matlabgames, matlabteams) {
     }
 
     //find people who have beaten the champion Villanova index# 988
+
     let transitoryWinners = FindWhoBeat(teams[988], null);
 
 
 
     let DoWeContinue = true;
     while (DoWeContinue) {
-
-
-
 
         for (let i = 0; i < transitoryWinners.length; i++) {
             if (transitoryWinners[i][transitoryWinners[i].length - 1] !== "*") {
@@ -66,15 +73,12 @@ function processFunction(matlabgames, matlabteams) {
             }
         }
 
-
         for (let i = 0; i < transitoryWinners.length; i++) {
             if (transitoryWinners[i][transitoryWinners[i].length - 1] === "*") {
-                //we have found one to look into!
-
+         
                 transitoryWinners.push
                 DoWeContinue = false;
             }
-
         }
     }
 
@@ -82,10 +86,6 @@ function processFunction(matlabgames, matlabteams) {
 
 
     return transitoryWinners;
-
-
-
-
 
     /////////functions
     function FindWhoBeat(x, list) {
@@ -99,19 +99,19 @@ function processFunction(matlabgames, matlabteams) {
 
         let gamesThatInvolveTheLoser = [];
         for (let i = 0; i < games.length; i++) {//find the games that involve the loser
-            if ((games[i][0] === loser)||(games[i][2] === loser)) {
+            if ((games[i][0] === loser.name)||(games[i][2] === loser.name)) {
                 gamesThatInvolveTheLoser.push(i);
             }
         }
 
         let peopleWhoBeatTheLoser = [];
         for (let i = 0; i < gamesThatInvolveTheLoser.length; i++) {//find the people who beat the loser
-            if (games[gamesThatInvolveTheLoser[i]][0] === loser) {
+            if (games[gamesThatInvolveTheLoser[i]][0] === loser.name) {
                 if (parseInt(games[gamesThatInvolveTheLoser[i]][1],10) < parseInt(games[gamesThatInvolveTheLoser[i]][3], 10)) {
                     peopleWhoBeatTheLoser.push(games[gamesThatInvolveTheLoser[i]][2]);
                 }
             }
-            if (games[gamesThatInvolveTheLoser[i]][2] === loser) {
+            if (games[gamesThatInvolveTheLoser[i]][2] === loser.name) {
                 if (parseInt(games[gamesThatInvolveTheLoser[i]][3],10) < parseInt(games[gamesThatInvolveTheLoser[i]][1]), 10) {
                     peopleWhoBeatTheLoser.push(games[gamesThatInvolveTheLoser[i]][0]);
                 }
@@ -158,8 +158,6 @@ function processFunction(matlabgames, matlabteams) {
 
         alert("!Warning! teams Array did not have: " + x);
     }
-
-
 }
 
 
