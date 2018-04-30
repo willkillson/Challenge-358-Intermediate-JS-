@@ -3,4 +3,6 @@ https://www.reddit.com/r/dailyprogrammer/comments/8ewq2e/20180425_challenge_358_
 
 DONE!
 You can test my solution at this link.
+
+
 https://willkillson.github.io/Challenge-358-Intermediate-JS-/
