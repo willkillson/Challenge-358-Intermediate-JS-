@@ -9,103 +9,138 @@ var fileInputTwo = document.getElementById('matlabteams');
 var rawBtn = document.getElementById('DisplayRaw');
 var processedBtn = document.getElementById('DisplayProcessed');
 
+function Entries() {
+    this.collection = new Array();
 
 
-function Entry(NewName) {
+    this.create = function (NewName) {
+        //make sure the NewName isn't already in this.collection]
+        let alreadyContains = false;
+        for (let i = 0; i < this.collection.length; i++) {
+            if (this.collection[i].name === NewName) {
+                alreadyContains = true;
+            }
+        }
 
-    this.name = NewName;
-    this.isChecked = false;
+        if (alreadyContains) {
+            //console.log(NewName + " is already in the collection.");
+            return;
+        }
+        else {
+            //console.log(NewName + " added to the collection.");
+            let newEntry = new Entry(NewName);
+            this.collection.push(newEntry);
+        }
+
+    }
+    this.getUncheckedEntry = function () {
+        //returns the name of an entry that hasn't been checked yet, 
+        //or returns - 1 if the whole collection has been checked
+
+        for (let i = 0; i < this.collection.length; i++) {
+            if (this.collection[i].isChecked === false) {
+                return this.collection[i].name;
+            }
+        }
+
+        return -1;
+    }
+    this.checkOff = function (nameToCheck) {
+        for (let i = 0; i < this.collection.length; i++) {
+            if (this.collection[i].name === nameToCheck) {
+                this.collection[i].isChecked = true;
+            }
+        }
+    }
+
+    function Entry(NewName) {
+
+        this.name = NewName;
+        this.isChecked = false;
+
+    }
 
 }
 
+
 function processFunction(matlabgames, matlabteams) {
-    let teams = matlabteams.match(/\d{1,4},\s[A-Z]{1}\S+/g);//split the teams up line by line
-    for (let i = 0; i < teams.length; i++) {//remove the numbers and bullshit from the team name
-        teams[i] = teams[i].replace(/\d{1,4}[,]\s/g, "");
-    }
-
-    let games = matlabgames.match(/\d{1,4},\s{1,3}[-]?\d,\s{1,5}\d{1,3},\s{1,5}\d{1,4},\s{1,5}[-]?\d,\s{1,5}\d{1,3}/g);
-    console.log(games.length);
-    for (let i = 0; i < games.length; i++) {
-
-        let p = games[i];
-        p = p.match(/\d{1,4}/g);
 
 
-        //convert strings to ints
-        for (let i = 0; i < p.length; i++) {
-            p[i] = parseInt(p[i], 10);
-        }
-
-        p[0] = p[0] - 1;//fix indexs for teams because they start off at 1 instead of zero
-        p[3] = p[3] - 1;//fix indexs for teams because they start off at 1 instead of zero
-
-        for (let i = 0; i < p.length; i++) {
-            p[i] = p[i].toString();
-        }
-
-        //convert ints back into strings
-        let f = new Array();
-        //let f = " T1 "+teams[p[0]] + " S1 " + p[2] + " T2 " + teams[p[3]] + " S2 " + p[5];
-        f.push(teams[p[0]]);
-        f.push(p[2]);
-        f.push(teams[p[3]]);
-        f.push(p[5]);
-        games[i] = f;
-    }
+    let teams = parseTeamArg(matlabteams);
+    let games = parseGamesArg(matlabgames);
 
     //find people who have beaten the champion Villanova index# 988
-    let Entries = new Array();
-    let newEntry = new Entry("Villanova");
-    Entries.push(newEntry);
-    Entries = newFunction(Entries);
+    let TWL = new Entries();
+    TWL.create("Villanova");
+
+   //find the people who beat the loser
+    let loser = TWL.getUncheckedEntry();
+    while (loser !== -1) {
+        process(loser);
+        loser = TWL.getUncheckedEntry();
+
+    }
+
+    return TWL.collection.length-1;//-1 to remove the Villanova because he is the champ, and not a transitory winner.
 
 
+    function parseTeamArg(teams) {
+        teams = matlabteams.match(/\d{1,4},\s[A-Z]{1}\S+/g);//split the teams up line by line
+        for (let i = 0; i < teams.length; i++) {//remove the numbers and bullshit from the team name
+            teams[i] = teams[i].replace(/\d{1,4}[,]\s/g, "");
+        }
 
 
-    return Entries;
+        return teams;
+    }
+    function parseGamesArg(games) {
 
-    //let DoWeContinue = true;
-    //while (DoWeContinue) {
+        games = matlabgames.match(/\d{1,4},\s{1,3}[-]?\d,\s{1,5}\d{1,3},\s{1,5}\d{1,4},\s{1,5}[-]?\d,\s{1,5}\d{1,3}/g);
+        for (let i = 0; i < games.length; i++) {
 
-    //    for (let i = 0; i < transitoryWinners.length; i++) {
-    //        if (transitoryWinners[i][transitoryWinners[i].length - 1] !== "*") {
-    //            console.log("WORKSE!~");
-    //            DoWeContinue = false;
-    //        }
-    //        else {
-    //            DoWeContinue = true;
-    //        }
-    //    }
-
-    //    for (let i = 0; i < transitoryWinners.length; i++) {
-    //        if (transitoryWinners[i][transitoryWinners[i].length - 1] === "*") {
-         
-    //            transitoryWinners.push
-    //            DoWeContinue = false;
-    //        }
-    //    }
-    //}
+            let p = games[i];
+            p = p.match(/\d{1,4}/g);
 
 
+            //convert strings to ints
+            for (let i = 0; i < p.length; i++) {
+                p[i] = parseInt(p[i], 10);
+            }
 
+            p[0] = p[0] - 1;//fix indexs for teams because they start off at 1 instead of zero
+            p[3] = p[3] - 1;//fix indexs for teams because they start off at 1 instead of zero
 
+            for (let i = 0; i < p.length; i++) {
+                p[i] = p[i].toString();
+            }
 
-    /////////functions
-    function newFunction(Entries) {
+            //convert ints back into strings
+            let f = new Array();
+            //let f = " T1 "+teams[p[0]] + " S1 " + p[2] + " T2 " + teams[p[3]] + " S2 " + p[5];
+            f.push(teams[p[0]]);
+            f.push(p[2]);
+            f.push(teams[p[3]]);
+            f.push(p[5]);
+            games[i] = f;
+        }
+        return games;
+    }
+    function process(loser) {
 
-        //find a loser
-        
-        //find the games that involve the loser
-        //find the people who beat the loser && make sure peopleWhoBeatTheLoser isn't already in the Entries 
-        
+        let gamesThatInvolveTheLoser = new Array();
+        for (let i = 0; i < games.length; i++) {//find the games that involve the loser
+            if ((games[i][0] === loser) || (games[i][2] === loser)) {
+                gamesThatInvolveTheLoser.push(i);
+   
+            }
+        }
 
-
-
-        Entries[0].isChecked = true;
-
-        console.log(Entries);
-
+        for (let i = 0; i < gamesThatInvolveTheLoser.length; i++) {
+            if (games[gamesThatInvolveTheLoser[i]][0] !== loser) {
+                TWL.create(games[gamesThatInvolveTheLoser[i]][0]);
+            }
+        }
+        TWL.checkOff(loser);
     }
 
 }
